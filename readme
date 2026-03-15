@@ -2,8 +2,6 @@
 
 Official implementation for the paper:
 
-**“基于图卷积神经网络的人体异常行为识别优化算法”**
-
 This repository presents an abnormal human behavior recognition framework based on skeleton sequences.  
 To improve robustness in complex surveillance scenes, we enhance the front-end human detection stage with **YOLOv8s** and introduce a **serial Spatial Attention Module (SAM)** after **ST-GCN** for spatial feature refinement.  
 The method is designed for abnormal event recognition such as **falling** and **fighting**, especially under challenging conditions like **occlusion**, **crowded scenes**, and **illumination changes**. :contentReference[oaicite:1]{index=1}
