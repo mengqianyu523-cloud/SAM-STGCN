@@ -4,7 +4,7 @@ Official implementation for the paper:
 
 This repository presents an abnormal human behavior recognition framework based on skeleton sequences.  
 To improve robustness in complex surveillance scenes, we enhance the front-end human detection stage with “YOLOv8s” and introduce a “serial Spatial Attention Module (SAM)” after “ST-GCN” for spatial feature refinement.  
-The method is designed for abnormal event recognition such as “falling” and “fighting”, especially under challenging conditions like “occlusion”, “crowded scenes”, and “illumination changes”. :contentReference[oaicite:1]{index=1}
+The method is designed for abnormal event recognition such as “falling” and “fighting”, especially under challenging conditions like “occlusion”, “crowded scenes”, and “illumination changes”. 
 
 ---
 
@@ -12,16 +12,13 @@ The method is designed for abnormal event recognition such as “falling” and 
 
 - **Robust skeleton extraction with YOLOv8s**
   - Replaces the traditional Tiny-YOLOv3 detector in the AlphaPose pipeline
-  - Improves person localization under occlusion, strong light, and multi-person scenes :contentReference[oaicite:2]{index=2}
-
+  - Improves person localization under occlusion, strong light, and multi-person scenes 
 - **Serial Spatial Attention Module (SAM)**
   - Placed **after** ST-GCN feature extraction rather than parallel embedding
-  - Dynamically emphasizes discriminative joints related to abnormal actions while suppressing redundant daily-motion noise :contentReference[oaicite:3]{index=3}
-
+  - Dynamically emphasizes discriminative joints related to abnormal actions while suppressing redundant daily-motion noise 
 - **Improved abnormal behavior recognition**
   - Achieves strong performance on abnormal behavior benchmarks including **Le2i** and **ShanghaiTech**
-  - Also shows good generalization on **NTU RGB+D 60** :contentReference[oaicite:4]{index=4}
-
+  - Also shows good generalization on **NTU RGB+D 60** 
 ---
 
 ## Framework Overview
@@ -31,17 +28,12 @@ Our pipeline consists of three stages:
 1. **Human detection and pose estimation**
    - Use **YOLOv8s** to detect human regions of interest
    - Feed detected human instances into **AlphaPose** for 17-keypoint pose estimation
-   - Construct an **18-joint skeleton** by adding the **neck joint** as the midpoint of the left and right shoulders :contentReference[oaicite:5]{index=5}
-
+   - Construct an **18-joint skeleton** by adding the **neck joint** as the midpoint of the left and right shoulders 
 2. **Spatio-temporal feature extraction**
-   - Use **ST-GCN** to model spatial topology and temporal motion dynamics of skeleton sequences :contentReference[oaicite:6]{index=6}
-
-3. **Spatial attention refinement**
+   - Use **ST-GCN** to model spatial topology and temporal motion dynamics of skeleton sequences 
    - Apply a lightweight **SAM** after ST-GCN
    - Use max pooling + mean pooling + convolution + sigmoid to generate spatial attention weights
-   - Recalibrate node features and enhance critical joints for abnormal action recognition :contentReference[oaicite:7]{index=7}
-
----
+   - Recalibrate node features and enhance critical joints for abnormal action recognition 
 
 ## Method
 
@@ -53,24 +45,20 @@ We replace it with **YOLOv8s**, which provides stronger robustness for:
 - occluded pedestrians
 - dense multi-person scenes
 - distant small targets
-- strong-light / night-time environments :contentReference[oaicite:8]{index=8}
-
+- strong-light / night-time environments
 ### 2. Serial SAM-STGCN architecture
 
 Unlike conventional uniform feature aggregation in ST-GCN, our method inserts a **Spatial Attention Module (SAM)** after spatio-temporal graph convolution to refine spatial node representations.  
 The SAM highlights discriminative joints related to abnormal motion patterns, such as:
 
 - arms in fighting actions
-- lower limbs and body center changes in falling actions :contentReference[oaicite:9]{index=9}
-
----
+- lower limbs and body center changes in falling actions
 
 ## Supported Datasets
 
 ### Le2i
 The Le2i abnormal behavior dataset contains surveillance videos from scenes such as **Home**, **Coffee room**, **Office**, and **Lecture room**, with abnormal events including **falling** and **fighting**.  
-The dataset contains **191 videos**, including **130 abnormal events**, with resolution **320×240**, frame rate **25 fps**, and around **24,000 frames**. :contentReference[oaicite:10]{index=10}
-
+The dataset contains **191 videos**, including **130 abnormal events**, with resolution **320×240**, frame rate **25 fps**, and around **24,000 frames**.
 ### ShanghaiTech Campus
 A representative benchmark for video anomaly detection, containing multiple campus scenes and both normal and abnormal events such as:
 
@@ -78,11 +66,8 @@ A representative benchmark for video anomaly detection, containing multiple camp
 - chasing
 - falling down
 - sudden running
-- biking / cycling in pedestrian areas :contentReference[oaicite:11]{index=11}
-
-### NTU RGB+D 60
-Used to evaluate the generalization ability of the proposed model on large-scale human action recognition. :contentReference[oaicite:12]{index=12}
-
+- biking / cycling in pedestrian areas
+Used to evaluate the generalization ability of the proposed model on large-scale human action recognition.
 ---
 
 ## Experimental Settings
@@ -92,8 +77,7 @@ All experiments are implemented in **PyTorch** with **Python 3.8** and run on:
 - Ubuntu
 - Intel Core i5-12600KF
 - NVIDIA GeForce RTX 4060 Ti (16GB)
-- CUDA 11.8 :contentReference[oaicite:13]{index=13}
-
+- CUDA 11.8 
 Training settings:
 
 - Optimizer: SGD with momentum
@@ -102,10 +86,7 @@ Training settings:
 - Epochs: 100
 - Initial learning rate: 0.01
 - Weight decay: 0.0001
-- Loss: Cross-Entropy / BCE depending on the task setting :contentReference[oaicite:14]{index=14}
-
----
-
+- Loss: Cross-Entropy / BCE depending on the task setting
 ## Main Results
 
 ### Le2i abnormal behavior dataset
@@ -117,10 +98,7 @@ Training settings:
 | YOLOv7-DeepSORT | 94.5 | 98.6 | 97.0 |
 | **Ours** | **96.42** | **98.8** | **99.1** |
 
-Top-1 accuracy of our method reaches **96.42%** on Le2i. :contentReference[oaicite:15]{index=15}
-
-### ShanghaiTech Campus dataset
-
+Top-1 accuracy of our method reaches **96.42%** on Le2i.
 | Method | Year | AUC (%) |
 |------|------:|------:|
 | Object-centric AE | 2019 | 78.7 |
@@ -131,9 +109,7 @@ Top-1 accuracy of our method reaches **96.42%** on Le2i. :contentReference[oaici
 | VideoPatchCore | 2023 | 85.1 |
 | **Ours** | **2026** | **85.1** |
 
-Our method achieves **85.1% AUC** on ShanghaiTech. :contentReference[oaicite:16]{index=16}
-
-### NTU RGB+D 60
+Our method achieves **85.1% AUC** on ShanghaiTech.
 
 | Method | CS (%) | CV (%) |
 |------|------:|------:|
@@ -142,8 +118,7 @@ Our method achieves **85.1% AUC** on ShanghaiTech. :contentReference[oaicite:16]
 | 2s-AGCN | 88.5 | 95.1 |
 | **Ours** | **87.5** | **94.4** |
 
-The model also demonstrates good generalization on NTU RGB+D 60. :contentReference[oaicite:17]{index=17}
-
+The model also demonstrates good generalization on NTU RGB+D 60.
 ---
 
 ## Ablation Study
@@ -160,8 +135,7 @@ We evaluate the contribution of **YOLOv8s** and **SAM** on ShanghaiTech:
 These results show that:
 - YOLOv8s improves the robustness of skeleton extraction
 - SAM enhances the discriminative representation of key joints
-- The full model achieves the best overall performance :contentReference[oaicite:18]{index=18}
-
+- The full model achieves the best overall performance
 ---
 
 ## Repository Structure
