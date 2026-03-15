@@ -178,3 +178,6 @@ You can organize the repository as follows:
 ├── checkpoints/            # pretrained weights (optional)
 ├── results/                # logs and experiment outputs
 └── README.md
+
+
+Official implementation of abnormal human behavior recognition based on YOLOv8s, AlphaPose, ST-GCN, and Spatial Attention. The source code will be made publicly available after the paper is published.
